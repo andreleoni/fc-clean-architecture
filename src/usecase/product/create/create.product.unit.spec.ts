@@ -1,7 +1,13 @@
 import CreateProductUseCase from "./create.product.usecase";
 
-const productCreateTestingInput = {
+const productACreateTestingInput = {
   type: "a",
+  name: "my testing product name",
+  price: 20000,
+};
+
+const productBCreateTestingInput = {
+  type: "b",
   name: "my testing product name",
   price: 20000,
 };
@@ -16,11 +22,11 @@ const MockRepository = () => {
 };
 
 describe("Unit test create product use case", () => {
-  it("should create a product", async () => {
+  it("should create a product of type A", async () => {
     const productRepository = MockRepository();
     const productCreateUseCase = new CreateProductUseCase(productRepository);
 
-    const output = await productCreateUseCase.execute(productCreateTestingInput);
+    const output = await productCreateUseCase.execute(productACreateTestingInput);
 
     expect(output).toEqual({
       id: expect.any(String),
@@ -29,13 +35,26 @@ describe("Unit test create product use case", () => {
     });
   });
 
+  it("should create a product of type B", async () => {
+    const productRepository = MockRepository();
+    const productCreateUseCase = new CreateProductUseCase(productRepository);
+
+    const output = await productCreateUseCase.execute(productBCreateTestingInput);
+
+    expect(output).toEqual({
+      id: expect.any(String),
+      name: "my testing product name",
+      price: 40000,
+    });
+  });
+
   it("should thrown an error when name is missing", async () => {
     const productRepository = MockRepository();
     const productCreateUseCase = new CreateProductUseCase(productRepository);
 
-    productCreateTestingInput.name = "";
+    productACreateTestingInput.name = "";
 
-    await expect(productCreateUseCase.execute(productCreateTestingInput)).rejects.toThrow(
+    await expect(productCreateUseCase.execute(productACreateTestingInput)).rejects.toThrow(
       "Name is required"
     );
   });
