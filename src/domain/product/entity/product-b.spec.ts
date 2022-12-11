@@ -1,6 +1,6 @@
 import ProductB from "./product-b";
 
-describe("Product unit tests", () => {
+describe("Product B unit tests", () => {
   it("should throw error when id is empty", () => {
     expect(() => {
       new ProductB("", "Product 1", 100);
