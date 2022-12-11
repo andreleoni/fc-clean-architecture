@@ -4,6 +4,8 @@ import NotificationError from "../../@shared/notification/notification.error";
 import CustomerValidatorFactory from "../factory/customer.validator.factory";
 
 export default class Customer extends Entity {
+  protected _id: string;
+
   private _name: string = "";
   private _address!: Address;
   private _active: boolean = false;
@@ -17,6 +19,10 @@ export default class Customer extends Entity {
     if (this.notification.hasErrors()) {
       throw new NotificationError(this.notification.getErrors());
     }
+  }
+
+  get id(): string {
+    return this._id;
   }
 
   get name(): string {
