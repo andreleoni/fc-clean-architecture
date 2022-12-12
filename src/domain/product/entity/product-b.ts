@@ -1,6 +1,7 @@
 import ProductInterface from "./product.interface";
 import NotificationError from "../../@shared/notification/notification.error";
 import Notification from "../../@shared/notification/notification";
+import ProductBValidatorFactory from "../factory/product-b.validator.factory";
 
 export default class ProductB implements ProductInterface {
   public notification: Notification;
@@ -41,30 +42,11 @@ export default class ProductB implements ProductInterface {
     this.validate();
   }
 
-  validate(): boolean {
-    if (this._id.length === 0) {
-      this.notification.addError({
-        context: "product",
-        message: "Id is required",
-      });
-    }
-    if (this._name.length === 0) {
-      this.notification.addError({
-        context: "product",
-        message: "Name is required",
-      });
-    }
-    if (this._price < 0) {
-      this.notification.addError({
-        context: "product",
-        message: "Price must be greater than zero",
-      });
-    }
+  validate(): void {
+    ProductBValidatorFactory.create().validate(this);
 
     if (this.notification.hasErrors()) {
       throw new NotificationError(this.notification.getErrors());
     }
-
-    return true;
   }
 }
