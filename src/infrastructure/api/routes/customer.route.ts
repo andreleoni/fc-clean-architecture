@@ -21,6 +21,8 @@ customerRoute.post("/", async (req: Request, res: Response) => {
     const output = await usecase.execute(customerDto);
     res.send(output);
   } catch (err) {
+    console.log(err) // Only shows the got error to temporary debug purposals
+
     res.status(500).send(err);
   }
 });
